@@ -1,8 +1,11 @@
 <template>
-    <div class="w-full h-[50px] shadow-md flex items-center text-black bg-white sticky top-0 p-2">
-      <div class="w-1/6"/>
-      <div class="w-5/6 flex justify-between items-center">
-       <SearchBoxHeader />
+    <div class="w-full h-[60px] shadow-md flex items-center justify-between bg-white sticky top-0 p-2">
+      <div class="ps-5 flex gap-8">
+        <span v-if="store.showSidebar" @click="ToggleMenu" class="mdi mdi-menu mdi-24px cursor-pointer"></span>
+        <SearchBoxHeader />
+      </div>
+      <div class="flex gap-24 justify-between items-center">
+        <NotificationDropDown class="pt-2" />
         <DropDown />
       </div>
     </div>
@@ -16,4 +19,5 @@ function ToggleMenu(){
 import {RouterLink} from "vue-router";
 import SearchBoxHeader from "@/components/Elements/SearchBoxHeader.vue";
 import DropDown from "@/components/Elements/DropDown.vue";
+import NotificationDropDown from "@/components/Elements/NotificationDropDown.vue";
 </script>

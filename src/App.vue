@@ -3,7 +3,7 @@
       <SideBar />
     <div class="w-full bg-gray-400">
       <Header />
-      <div class="h-[calc(100vh-50px)]">
+      <div class="h-[calc(100vh-60px)]">
         <RouterView />
       </div>
     </div>
