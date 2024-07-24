@@ -5,4 +5,5 @@ textarea, input { outline: none; }
 
 body {
     font-family: 'Red Hat Display', sans-serif;
+    @apply bg-[#EDEEF3]
 }

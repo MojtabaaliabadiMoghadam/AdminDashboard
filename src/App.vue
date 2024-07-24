@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-svw h-svw">
       <SideBar />
-    <div class="w-full bg-gray-400">
+    <div class="w-full">
       <Header />
       <div class="h-[calc(100vh-60px)]">
         <RouterView />
