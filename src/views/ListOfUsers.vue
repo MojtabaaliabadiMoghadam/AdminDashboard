@@ -3,7 +3,19 @@
     <template #header>
       <span class="font-bold text-[24px]">List Of Users</span>
     </template>
-    <div>
+    <div class="flex flex-col gap-3">
+      <div class="grid grid-cols-12">
+        <div class="inline-flex col-span-3">
+          <base-input label="Search">
+            <template #icon>
+              <span class="mdi mdi-magnify"></span>
+            </template>
+          </base-input>
+        </div>
+        <div class="inline-flex col-span-3">
+          <base-select />
+        </div>
+      </div>
       <Table
           :headers="headers"
           :data="data"
@@ -21,6 +33,8 @@
 import LayoutOfPages from "@/components/Elements/LayoutOfPages.vue";
 import Table from "@/components/Elements/Table.vue";
 import {ref} from "vue";
+import BaseInput from "@/components/UIKit/baseInput.vue";
+import BaseSelect from "@/components/UIKit/baseSelect.vue";
 const headers = ref([
   {title:'id',key:'id'},
   {title:'name',key:'name'},
