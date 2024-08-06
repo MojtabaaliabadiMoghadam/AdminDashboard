@@ -10,11 +10,16 @@
         <div class="flex flex-col gap-2 w-full">
           <template v-for="(data, index) in data_up_sidebar" :key="index">
             <div @click="changePage(data.path)" :class="[!store.showSidebar?'!px-2':'',index === 4?'border-b pb-4':'']" class="px-5">
-              <div class="flex gap-3 justify-center items-center rounded-xl ease-in duration-200 h-[50px] hover:bg-[#4880FF] hover:text-white group ">
+              <div
+                  class="flex gap-3 justify-center items-center rounded-xl ease-in duration-200 h-[50px] hover:bg-[#4880FF] hover:text-white group "
+                  :class="{'!bg-[#4880FF]' : route.path == data.path}"
+              >
                 <span :class="[data.icon]" class="text-[#202224] group-hover:text-white mdi mdi-24px"></span>
                 <transition>
                 <span v-if="store.showSidebar"
-                      class="font-medium text-[#202224] group-hover:text-white flex justify-start items-center text-[16px] w-[100px]">
+                      class="font-medium text-[#202224] group-hover:text-white flex justify-start items-center text-[16px] w-[100px]"
+                      :class="{'!text-white' : route.path == data.path}"
+                >
                       {{ data.text }}
                 </span>
                 </transition>
@@ -53,7 +58,8 @@
 </template>
 <script setup lang="ts">
 import { useDataStore } from "@/stores/counter.js";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
+const route = useRoute()
 const router = useRouter()
 const store = useDataStore();
 const data_up_sidebar = [

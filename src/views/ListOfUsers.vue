@@ -4,16 +4,16 @@
       <span class="font-bold text-[24px]">List Of Users</span>
     </template>
     <div class="flex flex-col gap-3">
-      <div class="grid grid-cols-12">
-        <div class="inline-flex col-span-3">
+      <div class="grid grid-cols-12 items-center">
+        <div class="inline-flex col-span-2">
           <base-input label="Search">
             <template #icon>
-              <span class="mdi mdi-magnify"></span>
+              <span class="mdi mdi-magnify" />
             </template>
           </base-input>
         </div>
-        <div class="inline-flex col-span-3">
-          <base-select />
+        <div class="col-span-2">
+          <base-select label="select box"/>
         </div>
       </div>
       <Table

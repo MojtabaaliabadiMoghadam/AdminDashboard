@@ -4,7 +4,7 @@
        {{props.label}}
     </label>
     <div class="relative">
-      <input v-model="model" type="text" class="py-2 px-4 rounded-xl ring-1 ring-gray-400 focus:ring-2">
+      <InputText type="text"  v-model="model" />
       <div class="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
         <slot name="icon"/>
       </div>
@@ -12,6 +12,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import InputText from 'primevue/inputtext';
 const model = defineModel()
 interface IPropsData {
   label?:string;
