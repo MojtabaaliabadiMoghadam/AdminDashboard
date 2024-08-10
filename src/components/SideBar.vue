@@ -57,7 +57,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useDataStore } from "@/stores/counter.js";
+import { useDataStore } from "@/stores/counter.ts";
 import {useRoute, useRouter} from "vue-router";
 const route = useRoute()
 const router = useRouter()

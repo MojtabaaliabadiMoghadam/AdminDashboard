@@ -7,6 +7,7 @@ import App from './App.vue'
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import router from './router'
+import 'vue3-toastify/dist/index.css';
 import Select from 'primevue/select';
 const app = createApp(App)
 
