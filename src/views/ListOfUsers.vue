@@ -30,25 +30,44 @@
   </LayoutOfPages>
 </template>
 <script setup>
-import LayoutOfPages from "@/components/Elements/LayoutOfPages.vue";
-import Table from "@/components/Elements/Table.vue";
-import {ref} from "vue";
-import BaseInput from "@/components/UIKit/baseInput.vue";
-import BaseSelect from "@/components/UIKit/baseSelect.vue";
-const headers = ref([
-  {title:'id',key:'id'},
-  {title:'name',key:'name'},
-  {title:'status',key:'status'},
-  {title:'number',key:'number'},
-  {title:'date',key:'date'},
-])
-const data = ref([
-  { id: 1, name: 'hosein alipor', status: 'member', number: '09151112333', date: '1403/07/22' },
-  { id: 2, name: 'ali rezaei', status: 'admin', number: '09151112334', date: '1403/07/23' },
-  { id: 3, name: 'zahra ahmadi', status: 'guest', number: '09151112335', date: '1403/07/24' },
-  { id: 4, name: 'mohammad ghasemi', status: 'member', number: '09151112336', date: '1403/07/25' },
-  { id: 5, name: 'fatemeh jalili', status: 'guest', number: '09151112337', date: '1403/07/26' },
-  { id: 6, name: 'sara karimi', status: 'admin', number: '09151112338', date: '1403/07/27' },
-  { id: 7, name: 'reza moradi', status: 'member', number: '09151112339', date: '1403/07/28' }
-])
+import { onMounted, ref } from 'vue';
+import LayoutOfPages from '@/components/Elements/LayoutOfPages.vue';
+import Table from '@/components/Elements/Table.vue';
+import BaseInput from '@/components/UIKit/baseInput.vue';
+import BaseSelect from '@/components/UIKit/baseSelect.vue';
+import { fetchData } from '@/Helpers/helper.ts';
+
+// Define the headers for the table
+const headers = [
+  { text: 'ID', value: 'id' },
+  { text: 'Name', value: 'name' },
+  // Add other headers as needed
+];
+
+// Data reference to store the fetched data
+const data = ref([]);
+
+// Function to fetch data from the API
+async function getData() {
+  try {
+    const { status, data: responseData, message } = await fetchData({
+      endpoint: '/api/users',
+      method: 'GET',
+      authorization: true // Use authorization if needed
+    });
+    console.log('status', status);
+    console.log('data', responseData);
+    console.log('message', message);
+
+    // Update the data reference with the fetched data
+    data.value = responseData;
+  } catch (error) {
+    console.error('Failed to fetch data:', error);
+  }
+}
+
+// Fetch data when the component is mounted
+onMounted(async () => {
+  await getData();
+});
 </script>

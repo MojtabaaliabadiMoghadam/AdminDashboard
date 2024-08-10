@@ -11,7 +11,7 @@
     </div>
 </template>
 <script setup>
-import {useDataStore} from "@/stores/counter.js";
+import {useDataStore} from "@/stores/counter.ts";
 const store = useDataStore()
 function ToggleMenu(){
   store.showSidebar = !store.showSidebar

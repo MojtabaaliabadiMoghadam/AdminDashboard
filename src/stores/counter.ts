@@ -3,6 +3,9 @@ import { defineStore } from 'pinia'
 
 export const useDataStore = defineStore('data', () => {
   const showSidebar = ref(true)
-
-  return { showSidebar }
+  const mobile = ref<number|null>(null)
+  return {
+    showSidebar ,
+    mobile
+  }
 })
