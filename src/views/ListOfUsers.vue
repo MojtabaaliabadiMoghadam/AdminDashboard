@@ -1,71 +1,114 @@
 <template>
   <LayoutOfPages>
     <template #header>
-      <span class="font-bold text-[24px]">List Of Users</span>
+      <span class="font-bold text-[24px]">لیست کاربران</span>
     </template>
     <div class="flex flex-col gap-3">
       <div class="grid grid-cols-12 items-center">
         <div class="inline-flex col-span-2">
-          <base-input label="Search">
+          <base-input label="جستجو" v-model="searchInput" >
             <template #icon>
               <span class="mdi mdi-magnify" />
             </template>
           </base-input>
         </div>
         <div class="col-span-2">
-          <base-select label="select box"/>
+          <base-select label="وضعیت کاربر"/>
         </div>
       </div>
       <Table
           :headers="headers"
-          :data="data"
+          :data="dataTable"
+          :loading="loadingTable"
       >
-        <template #id="{item}">
-          <div class="font-bold">
-            {{item.id}}
+        <template #created_at="{item}">
+            {{formatDate(item.created_at)}}
+        </template>
+        <template #settings>
+          <div class="flex items-center justify-center">
+            <span @click="isModalOpen = true" class="h-10 w-10  rounded-full p-2 hover:bg-blue-100 mdi mdi-cog mdi-24px text-blue-500 transition-all
+             delay-75 cursor-pointer"/>
           </div>
         </template>
       </Table>
     </div>
+    <base-modal v-model="isModalOpen" :update:isOpen="isModalOpen" title="ویرایش کاربر">
+
+    </base-modal>
   </LayoutOfPages>
 </template>
-<script setup>
-import { onMounted, ref } from 'vue';
+<script setup lang="ts">
+import {onMounted, ref, watch} from 'vue';
 import LayoutOfPages from '@/components/Elements/LayoutOfPages.vue';
 import Table from '@/components/Elements/Table.vue';
 import BaseInput from '@/components/UIKit/baseInput.vue';
 import BaseSelect from '@/components/UIKit/baseSelect.vue';
-import { fetchData } from '@/Helpers/helper.ts';
+import { fetchData,formatDate,formatDateToJalali ,showErrorToast} from '@/Helpers/helper.ts';
+import BaseModal from "@/components/UIKit/baseModal.vue";
 
-// Define the headers for the table
+
+const loadingTable = ref<boolean>(false)
+const searchInput = ref<string|null>(null)
+const isModalOpen = ref<boolean>(false)
 const headers = [
-  { text: 'ID', value: 'id' },
-  { text: 'Name', value: 'name' },
-  // Add other headers as needed
+  { title: 'نام', key: 'first_name' },
+  { title: 'نام خانوادگی', key: 'last_name' },
+  { title: 'موبایل', key: 'mobile' },
+  { title: 'ایمیل', key: 'email' },
+  { title: 'تاریخ ورود', key: 'created_at' },
+  { title: 'تنظیمات', key: 'settings', width:100},
 ];
 
 // Data reference to store the fetched data
-const data = ref([]);
+interface IDataTable {
+  created_at: string|null
+  deleted_at: string|null
+  email: string|null
+  email_verified_at: string|null
+  first_name: string|null
+  id: number
+  last_name: string|null
+  mobile: number
+  mobile_verified_at: string|null
+  status: number
+  updated_at: string|null
+  username: string|null
+}
+const dataTable = ref<IDataTable>();
 
 // Function to fetch data from the API
 async function getData() {
+  loadingTable.value = true
   try {
-    const { status, data: responseData, message } = await fetchData({
+    const { status, data, message } = await fetchData({
       endpoint: '/api/users',
       method: 'GET',
-      authorization: true // Use authorization if needed
+      params:{
+        search:searchInput.value ? searchInput.value : null
+      },
+      authorization: true
     });
-    console.log('status', status);
-    console.log('data', responseData);
-    console.log('message', message);
-
+    if (status == 200){
+      dataTable.value = data.users
+      loadingTable.value = false
+    }else{
+      showErrorToast(message)
+      loadingTable.value = false
+    }
     // Update the data reference with the fetched data
-    data.value = responseData;
   } catch (error) {
     console.error('Failed to fetch data:', error);
   }
 }
-
+let deepTime = 0
+watch(()=>searchInput.value,()=>{
+  if (deepTime) {
+    clearTimeout(deepTime);
+  }
+  deepTime = setTimeout(async () => {
+    await getData()
+  }, 900);
+},{deep:true})
 // Fetch data when the component is mounted
 onMounted(async () => {
   await getData();

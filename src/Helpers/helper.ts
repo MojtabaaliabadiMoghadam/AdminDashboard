@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { toast } from 'vue3-toastify';
 const API_BASE_URL = 'http://185.147.160.121';
+import { toJalaali } from 'jalaali-js';
 
 // Function to create an Axios instance with initial settings
 function createAxiosInstance(token, authorization) {
@@ -52,7 +53,6 @@ export async function fetchData(options) {
             data,
             params, // Add query parameters
         });
-        console.log(response , 'response')
         // Return response on success
         return {
             status: response.data.status,      // HTTP status
@@ -71,10 +71,34 @@ export function showSuccessToast(message: string) {
         position: toast.POSITION.TOP_CENTER,
     });
 }
-
 export function showErrorToast(message: string) {
     toast.error(message, {
         autoClose: 2000,
         position: toast.POSITION.TOP_CENTER,
     });
+}
+export function formatDate(isoString) {
+    const date = new Date(isoString);
+
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const year = date.getUTCFullYear();
+
+    return `${day}/${month}/${year}`;
+}
+
+export function formatDateToJalali(isoString) {
+    const date = new Date(isoString);
+
+    const gregorianYear = date.getUTCFullYear();
+    const gregorianMonth = date.getUTCMonth() + 1;
+    const gregorianDay = date.getUTCDate();
+
+    const { jy: jalaliYear, jm: jalaliMonth, jd: jalaliDay } = toJalaali(
+        gregorianYear,
+        gregorianMonth,
+        gregorianDay
+    );
+
+    return `${jalaliYear}/${jalaliMonth.toString().padStart(2, '0')}/${jalaliDay.toString().padStart(2, '0')}`;
 }

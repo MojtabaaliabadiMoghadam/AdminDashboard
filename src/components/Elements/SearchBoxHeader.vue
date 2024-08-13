@@ -7,7 +7,7 @@
       <input type="text" name="price" id="price"
              class="w-[388px] h-[35px] flex items-center bg-[#F5F6FA] rounded-full py-1.5 pl-9 pr-6 text-gray-900 border border-[#D5D5D5]
               placeholder:text-gray-400 sm:text-sm sm:leading-6 shadow-sm"
-             placeholder="Search" />
+             placeholder="جستجو کنید" />
     </div>
   </div>
 </template>

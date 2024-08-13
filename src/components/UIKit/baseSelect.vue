@@ -3,7 +3,8 @@
     <label v-if="props.label" class="text-[16px] font-medium ps-1">
       {{props.label}}
     </label>
-    <Select :loading="props.loading" :disabled="props.disabled" v-model="model" :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-56" />
+    <Select :loading="props.loading" :disabled="props.disabled" v-model="model" :options="cities" optionLabel="name"
+            :placeholder="props.place_holder" class="w-full md:w-56" />
   </div>
 
 </template>
@@ -14,6 +15,7 @@ interface IPropsData {
   label?:string;
   loading?:boolean;
   disabled?:boolean
+  place_holder?:string
 }
 const props = withDefaults(defineProps<IPropsData>(),{
   loading:false,

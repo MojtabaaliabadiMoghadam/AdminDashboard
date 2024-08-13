@@ -3,7 +3,13 @@
 @tailwind utilities;
 textarea, input { outline: none; }
 
+@font-face {
+    font-family: 'vazir';
+    src: url('~assets/fonts/Vazirmatn-Medium.ttf') format('truetype'),
+    url('../fonts/Vazirmatn-Medium.woff2') format('truetype');
+}
+
 body {
-    font-family: 'Red Hat Display', sans-serif;
+    font-family: 'vazir', sans-serif;
     @apply bg-[#EDEEF3]
 }

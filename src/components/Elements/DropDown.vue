@@ -24,7 +24,7 @@
           leave-to-class="transform scale-95 opacity-0"
       >
         <MenuItems
-            class="z-30 absolute bg-white border border-gray-300 top-[45px] right-[50px]  rounded-2xl shadow-md flex flex-col"
+            class="z-30 absolute bg-white border border-gray-300 top-[45px] right-0  rounded-2xl shadow-md flex flex-col"
         >
           <template
               v-for="(data,index) in data_dropdown"
