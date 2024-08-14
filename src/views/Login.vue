@@ -38,7 +38,7 @@ async function sendData() {
     store.mobile = mobileLogin.value
     showSuccessToast(message)
     setTimeout(async ()=>{
-      await router.push('/otp-confirm')
+      await router.push('/login/otp-confirm')
     },700)
   }else{
     showErrorToast(message)

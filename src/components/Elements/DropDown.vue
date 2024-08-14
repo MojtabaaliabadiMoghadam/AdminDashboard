@@ -51,10 +51,10 @@ function ChangeDropDown (){
   toggleDropDown.value = !toggleDropDown.value
 }
 const data_dropdown = [
-  {extra_class:'rounded-t-2xl', color:'text-[#4E96FF]', icon: 'mdi-account-edit', text: 'Manage Account'},
-  {extra_class:'',color:'text-[#F97FD9]', icon: 'mdi-key-variant', text: 'Change Password'},
-  {extra_class:'',color:'text-[#9E8FFF]', icon: 'mdi-refresh', text: 'Activity Log'},
-  {extra_class:'rounded-b-2xl', color:'text-[#FF8F8F]', icon: 'mdi-logout', text: 'Log Out'},
+  {extra_class:'rounded-t-2xl', color:'text-[#4E96FF]', icon: 'mdi-account-edit', text: 'مدیریت حساب'},
+  {extra_class:'',color:'text-[#F97FD9]', icon: 'mdi-key-variant', text: 'تغییر رمز عبور'},
+  {extra_class:'',color:'text-[#9E8FFF]', icon: 'mdi-refresh', text: 'تاریخچه'},
+  {extra_class:'rounded-b-2xl', color:'text-[#FF8F8F]', icon: 'mdi-logout', text: 'خروج از حساب'},
 ];
 function closeDropdown() {
   console.log('run')

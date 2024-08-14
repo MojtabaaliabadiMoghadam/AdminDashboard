@@ -3,10 +3,10 @@
     <template #header>
       <span class="font-bold text-[24px]">لیست کاربران</span>
     </template>
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-10">
       <div class="grid grid-cols-12 items-center">
         <div class="inline-flex col-span-2">
-          <base-input label="جستجو" v-model="searchInput" >
+          <base-input label="جستجو" v-model="searchInput" placeholder="جستجو کنید">
             <template #icon>
               <span class="mdi mdi-magnify" />
             </template>
@@ -17,8 +17,8 @@
         </div>
       </div>
       <Table
-          :headers="headers"
-          :data="dataTable"
+          :headers="dataTable.headers"
+          :data="dataTable.data"
           :loading="loadingTable"
       >
         <template #created_at="{item}">
@@ -50,15 +50,6 @@ import BaseModal from "@/components/UIKit/baseModal.vue";
 const loadingTable = ref<boolean>(false)
 const searchInput = ref<string|null>(null)
 const isModalOpen = ref<boolean>(false)
-const headers = [
-  { title: 'نام', key: 'first_name' },
-  { title: 'نام خانوادگی', key: 'last_name' },
-  { title: 'موبایل', key: 'mobile' },
-  { title: 'ایمیل', key: 'email' },
-  { title: 'تاریخ ورود', key: 'created_at' },
-  { title: 'تنظیمات', key: 'settings', width:100},
-];
-
 // Data reference to store the fetched data
 interface IDataTable {
   created_at: string|null
@@ -74,7 +65,25 @@ interface IDataTable {
   updated_at: string|null
   username: string|null
 }
-const dataTable = ref<IDataTable>();
+interface DataTable {
+  headers: any;
+  data: IDataTable[];
+  loading:boolean
+}
+const dataTable = ref<DataTable>({
+  headers:[
+    { title: 'نام', key: 'first_name' },
+    { title: 'نام خانوادگی', key: 'last_name' },
+    { title: 'موبایل', key: 'mobile' },
+    { title: 'ایمیل', key: 'email' },
+    { title: 'تاریخ ورود', key: 'created_at' },
+    { title: 'تنظیمات', key: 'settings', width:100},
+  ],
+  data:[],
+  loading:false
+})
+
+const items = ref<IDataTable>();
 
 // Function to fetch data from the API
 async function getData() {
@@ -89,7 +98,7 @@ async function getData() {
       authorization: true
     });
     if (status == 200){
-      dataTable.value = data.users
+      dataTable.value.data = data.users
       loadingTable.value = false
     }else{
       showErrorToast(message)
