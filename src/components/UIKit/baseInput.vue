@@ -4,7 +4,7 @@
        {{props.label}}
     </label>
     <div class="relative">
-      <InputText :class="props.classInput" :type="props.type"  v-model="model" />
+      <InputText :class="props.classInput" :type="props.type"  v-model="model" :placeholder="props.placeholder"/>
       <div class="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
         <slot name="icon"/>
       </div>
@@ -18,7 +18,8 @@ interface IPropsData {
   label?:string;
   classLabel?:string;
   classInput?:string;
-  type?:string
+  type?:string;
+  placeholder?:string
 }
 const props = withDefaults(defineProps<IPropsData>(),{
   type:'text'

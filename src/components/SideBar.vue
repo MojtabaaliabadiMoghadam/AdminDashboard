@@ -63,9 +63,9 @@ const route = useRoute()
 const router = useRouter()
 const store = useDataStore();
 const data_up_sidebar = [
-  { icon: 'mdi-view-dashboard-outline', text: 'داشبورد' ,path:'/'},
-  { icon: 'mdi-account-multiple-outline', text: 'لیست کاربران' ,path:'/list-of-users'},
-  { icon: 'mdi-book-open-outline', text: 'لیست نقالات' ,path:'/list-of-articles'},
+  { icon: 'mdi-view-dashboard-outline', text: 'داشبورد' ,path:'/admin/dashboard'},
+  { icon: 'mdi-account-multiple-outline', text: 'لیست کاربران' ,path:'/admin/list-of-users'},
+  { icon: 'mdi-book-open-outline', text: 'لیست نقالات' ,path:'/admin/list-of-articles'},
 ];
 // const data_down_sidebar = [];
 

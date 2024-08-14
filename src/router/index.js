@@ -9,30 +9,30 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/admin/dashboard',
       name: 'home',
       component: Home,
-      meta: { requiresAuth: true } // مشخص کردن نیاز به احراز هویت
+      meta: { requiresAuth: true }
     },
     {
-      path: '/list-of-users',
+      path: '/admin/list-of-users',
       name: 'list-of-users',
       component: ListOfUsers,
-      meta: { requiresAuth: true } // مشخص کردن نیاز به احراز هویت
+      meta: { requiresAuth: true }
     },
     {
-      path: '/list-of-articles',
+      path: '/admin/list-of-articles',
       name: 'list-of-articles',
       component: ListOfArticle,
-      meta: { requiresAuth: true } // مشخص کردن نیاز به احراز هویت
+      meta: { requiresAuth: true }
     },
     {
-      path: '/login',
+      path: '/login/otp',
       name: 'login',
       component: Login
     },
     {
-      path: '/otp-confirm',
+      path: '/login/otp-confirm',
       name: 'otp',
       component: OtpConfirm
     }
@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some(record => record.meta.requiresAuth) && !isLoggedIn) {
     // اگر نیاز به احراز هویت دارد و کاربر وارد نشده
-    next('/login'); // کاربر به صفحه ورود هدایت می‌شود
+    next('/login/otp'); // کاربر به صفحه ورود هدایت می‌شود
   } else {
     next(); // اجازه عبور
   }

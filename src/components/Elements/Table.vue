@@ -1,10 +1,10 @@
 <template>
   <!-- Table responsive wrapper -->
-  <div class="overflow-x-auto bg-white rounded-xl">
+  <div class="bg-white rounded-xl max-h-[600px] overflow-auto">
     <!-- Table -->
     <table class="min-w-full text-left text-sm whitespace-nowrap">
       <!-- Table head -->
-      <thead class="uppercase tracking-wider border-b-2 bg-neutral-50 sticky top-0 z-10">
+      <thead class="uppercase tracking-wider border-b-2 bg-neutral-50 sticky top-0">
       <tr>
         <th
             v-for="(header, index) in props.headers"

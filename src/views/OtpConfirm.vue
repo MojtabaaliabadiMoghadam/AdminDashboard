@@ -42,7 +42,7 @@ async function sendOTPData() {
     console.log(data, 'data');
     showSuccessToast(message);
     store.setToken(data?.token); // به‌روزرسانی توکن در store
-    await router.push('/');
+    await router.push('/admin/dashboard');
   } else {
     showErrorToast(message);
   }
