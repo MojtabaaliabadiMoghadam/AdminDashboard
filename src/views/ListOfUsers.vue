@@ -21,6 +21,7 @@
           :url="dataTable.url"
           :parameters="dataTable.params"
           :key="dataTable.key"
+          :itemKeyRequest="dataTable.itemKey"
       >
         <template #created_at="{item}">
             {{formatDate(item.created_at)}}
@@ -84,7 +85,8 @@ const dataTable = ref({
   loading:false,
   params:{},
   url:'/api/users',
-  key:0
+  key:0,
+  itemKey:'users'
 })
 
 const items = ref<IDataTable>();
@@ -120,7 +122,10 @@ watch(()=>searchInput.value,()=>{
     clearTimeout(deepTime);
   }
   deepTime = setTimeout(async () => {
-    await getData()
+    dataTable.value.params = {
+      search:searchInput.value
+    }
+     dataTable.value.key ++
   }, 900);
 },{deep:true})
 // Fetch data when the component is mounted

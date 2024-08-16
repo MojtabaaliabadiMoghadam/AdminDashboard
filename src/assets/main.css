@@ -5,8 +5,8 @@ textarea, input { outline: none; }
 
 @font-face {
     font-family: 'vazir';
-    src: url('~assets/fonts/Vazirmatn-Medium.ttf') format('truetype'),
-    url('../fonts/Vazirmatn-Medium.woff2') format('truetype');
+    src: url('@/assets/fonts/Vazirmatn-Medium.ttf') format('truetype'),
+    url('@/assets/fonts/Vazirmatn-Medium.woff2') format('truetype');
 }
 
 body {
