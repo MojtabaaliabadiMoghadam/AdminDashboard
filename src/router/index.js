@@ -10,7 +10,7 @@ const router = createRouter({
   routes: [
     {
       path: '/admin/dashboard',
-      name: 'home',
+      name: 'dashboard',
       component: Home,
       meta: { requiresAuth: true }
     },
@@ -35,6 +35,10 @@ const router = createRouter({
       path: '/login/otp-confirm',
       name: 'otp',
       component: OtpConfirm
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/admin/dashboard'
     }
   ]
 });

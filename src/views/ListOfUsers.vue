@@ -18,8 +18,9 @@
       </div>
       <Table
           :headers="dataTable.headers"
-          :data="dataTable.data"
-          :loading="loadingTable"
+          :url="dataTable.url"
+          :parameters="dataTable.params"
+          :key="dataTable.key"
       >
         <template #created_at="{item}">
             {{formatDate(item.created_at)}}
@@ -32,8 +33,12 @@
         </template>
       </Table>
     </div>
-    <base-modal v-model="isModalOpen" :update:isOpen="isModalOpen" title="ویرایش کاربر">
-
+    <base-modal v-model="isModalOpen" @update:isOpen="isModalOpen = $event" title="ویرایش کاربر">
+      <template #body>
+        <div class="min-w-[700px]">
+          bd
+        </div>
+      </template>
     </base-modal>
   </LayoutOfPages>
 </template>
@@ -45,7 +50,8 @@ import BaseInput from '@/components/UIKit/baseInput.vue';
 import BaseSelect from '@/components/UIKit/baseSelect.vue';
 import { fetchData,formatDate,formatDateToJalali ,showErrorToast} from '@/Helpers/helper.ts';
 import BaseModal from "@/components/UIKit/baseModal.vue";
-
+import {data} from "autoprefixer";
+//import files
 
 const loadingTable = ref<boolean>(false)
 const searchInput = ref<string|null>(null)
@@ -65,12 +71,7 @@ interface IDataTable {
   updated_at: string|null
   username: string|null
 }
-interface DataTable {
-  headers: any;
-  data: IDataTable[];
-  loading:boolean
-}
-const dataTable = ref<DataTable>({
+const dataTable = ref({
   headers:[
     { title: 'نام', key: 'first_name' },
     { title: 'نام خانوادگی', key: 'last_name' },
@@ -80,7 +81,10 @@ const dataTable = ref<DataTable>({
     { title: 'تنظیمات', key: 'settings', width:100},
   ],
   data:[],
-  loading:false
+  loading:false,
+  params:{},
+  url:'/api/users',
+  key:0
 })
 
 const items = ref<IDataTable>();
@@ -99,6 +103,7 @@ async function getData() {
     });
     if (status == 200){
       dataTable.value.data = data.users
+      dataTable.value.pagination = data.pagination
       loadingTable.value = false
     }else{
       showErrorToast(message)
