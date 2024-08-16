@@ -4,7 +4,7 @@
       {{props.label}}
     </label>
     <Select :loading="props.loading" :disabled="props.disabled" v-model="model" :options="cities" optionLabel="name"
-            :placeholder="props.place_holder" class="w-full md:w-56" />
+            :placeholder="props.place_holder" class="w-full" :class="[props.size]" />
   </div>
 
 </template>
@@ -15,10 +15,12 @@ interface IPropsData {
   label?:string;
   loading?:boolean;
   disabled?:boolean
-  place_holder?:string
+  place_holder?:string;
+  size?:string
 }
 const props = withDefaults(defineProps<IPropsData>(),{
   loading:false,
-  disabled:false
+  disabled:false,
+  size:'w-56'
 })
 </script>
