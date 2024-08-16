@@ -2,7 +2,7 @@
   <!-- Table responsive wrapper -->
   <div class="flex flex-col gap-3">
     <div class="w-[100px]">
-      <select class="px-5 py-2 rounded-xl">
+      <select @click="setPerPage" class="px-5 py-2 rounded-xl">
         <option value="10">10</option>
         <option value="30">30</option>
         <option value="50">50</option>
@@ -73,7 +73,10 @@
       </table>
     </div>
     <div v-if="pagination?.total">
-      <pagination :model-value="pagination.current_page" :per-page="pagination.per_page" :total="pagination.total" />
+      {{pagination.current_page}}
+      <pagination :model-value="pagination.current_page" :per-page="pagination.per_page" :total="100"
+                  @update:modelValue="setCurrentPage"
+      />
     </div>
   </div>
 </template>
@@ -81,7 +84,7 @@
 <script setup lang="ts">
 import BaseSelect from "@/components/UIKit/baseSelect.vue";
 import Pagination from "@/components/UIKit/pagination.vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {fetchData, showErrorToast} from "@/Helpers/helper";
 interface IHeaders {
   title?: string;
@@ -106,6 +109,7 @@ interface IPropsData {
 const currentPage = computed(()=> props.pagination.current_page)
 const props = defineProps<IPropsData>();
 const loadingTable = ref<boolean>(false)
+const per_page = ref<number>()
 const DataFromBackend = ref()
 const pagination = ref<IPagination>()
 //fetch data
@@ -115,7 +119,10 @@ async function getDataWithUrl() {
     const { status, data, message } = await fetchData({
       endpoint: props.url,
       method: 'GET',
-      params:props.parameters,
+      params: {...props.parameters,
+      current_page:pagination.value?.current_page,
+      per_page:per_page.value
+      },
       authorization: true
     });
     if (status == 200){
@@ -136,4 +143,11 @@ const finalLoading = computed(()=> props.url ? loadingTable.value : props.loadin
 onMounted(async ()=>{
   await getDataWithUrl()
 })
+async function setCurrentPage(event){
+  pagination.value.current_page = event
+  await getDataWithUrl()
+}
+function setPerPage(event){
+  console.log(event)
+}
 </script>
