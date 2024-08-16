@@ -28,7 +28,7 @@
         <!-- Table body -->
         <tbody>
         <!-- Conditional loading spinner inside tbody -->
-        <tr v-if="loadingTable">
+        <tr v-if="finalLoading">
           <td :colspan="props.headers.length" class="text-center py-10">
             <div role="status" class="flex justify-center items-center">
               <svg
@@ -54,7 +54,7 @@
         <!-- Table rows -->
         <tr
             v-else
-            v-for="(item, dataIndex) in props.data"
+            v-for="(item, dataIndex) in finalData"
             :key="dataIndex"
             class="border-b hover:bg-neutral-100"
         >
@@ -72,7 +72,9 @@
         </tbody>
       </table>
     </div>
-    <pagination :model-value="currentPage" :per-page="props.pagination.per_page" :total="props.pagination.total" />
+    <div v-if="pagination?.total">
+      <pagination :model-value="pagination.current_page" :per-page="pagination.per_page" :total="pagination.total" />
+    </div>
   </div>
 </template>
 
@@ -117,7 +119,7 @@ async function getDataWithUrl() {
       authorization: true
     });
     if (status == 200){
-      DataFromBackend.value = data.users
+      DataFromBackend.value = data[props.itemKeyRequest]
       pagination.value = data.pagination
       loadingTable.value = false
     }else{
@@ -129,6 +131,8 @@ async function getDataWithUrl() {
     console.error('Failed to fetch data:', error);
   }
 }
+const finalData = computed(()=> props.url ? DataFromBackend.value : props.data)
+const finalLoading = computed(()=> props.url ? loadingTable.value : props.loading)
 onMounted(async ()=>{
   await getDataWithUrl()
 })
