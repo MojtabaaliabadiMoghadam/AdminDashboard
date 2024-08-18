@@ -13,7 +13,15 @@
           </base-input>
         </div>
         <div class="col-span-2">
-          <base-select label="وضعیت کاربر"/>
+          <BaseSelect
+              :label="formItems.status.label"
+              :localOptions="formItems.status.localOptions"
+              :optionValue="formItems.status.optionValue"
+              :optionText="formItems.status.optionText"
+              @update:optionSelected="(event)=> status = event"
+              :place_holder="formItems.status.place_holder"
+              :size="formItems.status.size"
+          />
         </div>
       </div>
       <Table
@@ -36,9 +44,30 @@
     </div>
     <base-modal v-model="isModalOpen" @update:isOpen="isModalOpen = $event" title="ویرایش کاربر">
       <template #body>
-        <div class="min-w-[700px]">
-          bd
+        <div class="min-w-[700px] flex">
+          <div dir="rtl" class="w-full grid grid-cols-8 gap-3">
+            <div class="col-span-2">
+              <base-input :label="formItems.name.label" v-model="searchInput" :placeholder="formItems.name.place_holder" />
+            </div>
+            <div class="col-span-2">
+              <base-input :label="formItems.last_name.label" v-model="searchInput" :placeholder="formItems.last_name.place_holder" />
+            </div>
+            <div class="col-span-2">
+              <base-input :label="formItems.mobile.label" v-model="searchInput" :placeholder="formItems.mobile.place_holder" />
+            </div>
+          </div>
         </div>
+      </template>
+      <template #buttons>
+        <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300
+        font-medium rounded-lg text-sm px-10 py-3 me-2 mb-2 ">
+          لغو
+        </button>
+        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
+         font-medium rounded-lg text-sm px-10 py-3 w-[170px] me-2 mb-2 focus:outline-none">
+          ثبت
+        </button>
+
       </template>
     </base-modal>
   </LayoutOfPages>
@@ -51,10 +80,9 @@ import BaseInput from '@/components/UIKit/baseInput.vue';
 import BaseSelect from '@/components/UIKit/baseSelect.vue';
 import { fetchData,formatDate,formatDateToJalali ,showErrorToast} from '@/Helpers/helper.ts';
 import BaseModal from "@/components/UIKit/baseModal.vue";
-import {data} from "autoprefixer";
+const status = ref<number>()
 //import files
 
-const loadingTable = ref<boolean>(false)
 const searchInput = ref<string|null>(null)
 const isModalOpen = ref<boolean>(false)
 // Data reference to store the fetched data
@@ -88,34 +116,32 @@ const dataTable = ref({
   key:0,
   itemKey:'users'
 })
-
+const formItems = ref({
+  status:{
+    label:"وضعیت",
+    localOptions:[{ id: 1, name: 'فعال' }, { id: 0, name: 'غیر فعال' }],
+    optionValue:"id",
+    optionText:"name",
+    place_holder:"",
+    size:"!w-[200px]"
+  },
+  name:{
+    label:'نام',
+    place_holder:''
+  },
+  last_name:{
+    label:'نام خانوادگی',
+    place_holder:''
+  },
+  mobile:{
+    label:'موبایل',
+    place_holder:''
+  },
+})
 const items = ref<IDataTable>();
 
 // Function to fetch data from the API
-async function getData() {
-  loadingTable.value = true
-  try {
-    const { status, data, message } = await fetchData({
-      endpoint: '/api/users',
-      method: 'GET',
-      params:{
-        search:searchInput.value ? searchInput.value : null
-      },
-      authorization: true
-    });
-    if (status == 200){
-      dataTable.value.data = data.users
-      dataTable.value.pagination = data.pagination
-      loadingTable.value = false
-    }else{
-      showErrorToast(message)
-      loadingTable.value = false
-    }
-    // Update the data reference with the fetched data
-  } catch (error) {
-    console.error('Failed to fetch data:', error);
-  }
-}
+
 let deepTime = 0
 watch(()=>searchInput.value,()=>{
   if (deepTime) {
@@ -128,8 +154,8 @@ watch(()=>searchInput.value,()=>{
      dataTable.value.key ++
   }, 900);
 },{deep:true})
-// Fetch data when the component is mounted
-onMounted(async () => {
-  await getData();
-});
+watch(()=>status.value,()=>{
+  dataTable.value.params = {...dataTable.value.params,status:status.value}
+  dataTable.value.key ++
+},{deep:true})
 </script>

@@ -23,7 +23,7 @@
             @click.prevent="selectPage(page)"
             :class="[
             'flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700',
-            { 'font-bold text-blue-500 bg-gray-200': page === currentPage }
+            { 'font-bold text-blue-500 bg-gray-300': page === currentPage }
           ]"
         >
           {{ page }}
