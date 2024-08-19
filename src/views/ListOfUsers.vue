@@ -14,11 +14,11 @@
         </div>
         <div class="col-span-2">
           <BaseSelect
+              v-model="status"
               :label="formItems.status.label"
-              :localOptions="formItems.status.localOptions"
               :optionValue="formItems.status.optionValue"
               :optionText="formItems.status.optionText"
-              @update:optionSelected="(event)=> status = event"
+              :localOptions="formItems.status.localOptions"
               :place_holder="formItems.status.place_holder"
               :size="formItems.status.size"
           />
@@ -80,7 +80,7 @@ import BaseInput from '@/components/UIKit/baseInput.vue';
 import BaseSelect from '@/components/UIKit/baseSelect.vue';
 import { fetchData,formatDate,formatDateToJalali ,showErrorToast} from '@/Helpers/helper.ts';
 import BaseModal from "@/components/UIKit/baseModal.vue";
-const status = ref<number>()
+const status = ref<number>(1)
 //import files
 
 const searchInput = ref<string|null>(null)
@@ -111,7 +111,7 @@ const dataTable = ref({
   ],
   data:[],
   loading:false,
-  params:{},
+  params:{status:status.value},
   url:'/api/users',
   key:0,
   itemKey:'users'

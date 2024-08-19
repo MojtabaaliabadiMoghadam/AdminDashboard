@@ -9,6 +9,7 @@
         v-model="model"
         :options="options"
         :optionLabel="optionText"
+        :optionValue="optionValue"
         :placeholder="place_holder"
         class="w-full"
         :class="[size]"
