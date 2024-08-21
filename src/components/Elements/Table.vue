@@ -2,7 +2,7 @@
   <!-- Table responsive wrapper -->
   <div class="flex flex-col gap-3">
     <div class="w-[100px]">
-      <select class="px-5 py-2 rounded-xl">
+      <select v-model="per_page" @change="setPerPage" class="px-5 py-2 rounded-xl focus-visible:outline-none">
         <option value="10">10</option>
         <option value="30">30</option>
         <option value="50">50</option>
@@ -73,27 +73,33 @@
       </table>
     </div>
     <div v-if="pagination?.total">
-      <pagination :model-value="pagination.current_page" :per-page="pagination.per_page" :total="pagination.total" />
+      <pagination
+          :model-value="pagination.current_page"
+          :per-page="pagination.per_page"
+          :total="pagination.total"
+          @update:modelValue="setCurrentPage"
+      />
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
-import BaseSelect from "@/components/UIKit/baseSelect.vue";
-import Pagination from "@/components/UIKit/pagination.vue";
-import {computed, onMounted, ref} from "vue";
-import {fetchData, showErrorToast} from "@/Helpers/helper";
+import { ref, computed, onMounted } from 'vue';
+import Pagination from '@/components/UIKit/pagination.vue';
+import { fetchData, showErrorToast } from '@/Helpers/helper';
+
 interface IHeaders {
   title?: string;
   key?: string;
   classTh?: string;
   width?: number;
 }
+
 interface IPagination {
-  total?:number;
-  per_page?:number;
-  current_page?:number
+  total?: number;
+  per_page?: number;
+  current_page?: number;
 }
+
 interface IPropsData {
   headers?: IHeaders[];
   data?: [];
@@ -101,39 +107,59 @@ interface IPropsData {
   parameters?: string;
   itemKeyRequest?: string;
   loading?: boolean;
-  pagination?:IPagination
+  pagination?: IPagination;
 }
-const currentPage = computed(()=> props.pagination.current_page)
+
 const props = defineProps<IPropsData>();
-const loadingTable = ref<boolean>(false)
-const DataFromBackend = ref()
-const pagination = ref<IPagination>()
-//fetch data
+const loadingTable = ref<boolean>(false);
+const per_page = ref<number>(10);  // Default value is set to 10
+const DataFromBackend = ref();
+const pagination = ref<IPagination>();
+
+// Fetch data
 async function getDataWithUrl() {
-  loadingTable.value = true
+  loadingTable.value = true;
   try {
     const { status, data, message } = await fetchData({
       endpoint: props.url,
       method: 'GET',
-      params:props.parameters,
-      authorization: true
+      params: {
+        ...props.parameters,
+        page: pagination.value?.current_page,
+        per_page: per_page.value,
+      },
+      authorization: true,
     });
-    if (status == 200){
-      DataFromBackend.value = data[props.itemKeyRequest]
-      pagination.value = data.pagination
-      loadingTable.value = false
-    }else{
-      showErrorToast(message)
-      loadingTable.value = false
+
+    if (status == 200) {
+      DataFromBackend.value = data[props.itemKeyRequest];
+      pagination.value = data.pagination;
+    } else {
+      showErrorToast(message);
     }
-    // Update the data reference with the fetched data
   } catch (error) {
     console.error('Failed to fetch data:', error);
+  } finally {
+    loadingTable.value = false;
   }
 }
-const finalData = computed(()=> props.url ? DataFromBackend.value : props.data)
-const finalLoading = computed(()=> props.url ? loadingTable.value : props.loading)
-onMounted(async ()=>{
-  await getDataWithUrl()
-})
+
+const finalData = computed(() => (props.url ? DataFromBackend.value : props.data));
+const finalLoading = computed(() => (props.url ? loadingTable.value : props.loading));
+
+onMounted(async () => {
+  await getDataWithUrl();
+});
+
+async function setCurrentPage(event) {
+  pagination.value.current_page = event;
+  console.log(pagination.value.current_page)
+  await getDataWithUrl();
+}
+
+async function setPerPage(event: Event) {
+  const target = event.target as HTMLSelectElement;
+  per_page.value = parseInt(target.value);
+  await getDataWithUrl();
+}
 </script>
