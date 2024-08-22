@@ -9,7 +9,7 @@
       <div class="w-full">
         <div class="flex flex-col gap-2 w-full">
           <template v-for="(data, index) in data_up_sidebar" :key="index">
-            <div @click="changePage(data.path)" :class="[!store.showSidebar?'!px-2':'',index === 4?'border-b pb-4':'']" class="px-5">
+            <div @click="changePage(data.path)" :class="[!store.showSidebar?'!px-2':'',index === 4?'border-b pb-4':'']" class="px-5 cursor-pointer">
               <div
                   class="flex gap-3 justify-center items-center rounded-xl ease-in duration-200 h-[50px] hover:bg-[#4880FF] hover:text-white group "
                   :class="{'!bg-[#4880FF]' : route.path == data.path}"

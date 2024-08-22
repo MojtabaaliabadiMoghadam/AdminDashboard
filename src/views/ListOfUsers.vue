@@ -5,14 +5,14 @@
     </template>
     <div class="flex flex-col gap-10">
       <div class="grid grid-cols-12 items-center">
-        <div class="inline-flex col-span-2">
+        <div class="inline-flex col-span-3">
           <base-input label="جستجو" v-model="searchInput" placeholder="جستجو کنید">
             <template #icon>
               <span class="mdi mdi-magnify" />
             </template>
           </base-input>
         </div>
-        <div class="col-span-2">
+        <div class="col-span-3">
           <BaseSelect
               v-model="status"
               :label="formItems.status.label"
@@ -23,7 +23,7 @@
               :size="formItems.status.size"
           />
         </div>
-        <div class="col-span-8 flex justify-end ">
+        <div class="col-span-6 flex justify-end ">
           <button @click="isModalCreate = true" type="button" class="text-blue-700 font-bold hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4
           focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-10 py-3 text-center me-2 mb-2">
             ایجاد کاربر
