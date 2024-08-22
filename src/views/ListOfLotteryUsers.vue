@@ -1,7 +1,9 @@
 <template>
   <LayoutOfPages>
     <template #header>
-      <span class="font-bold text-[24px]">لیست کاربران لاتاری</span>
+      <span class="font-bold text-[24px]">
+        لیست کاربران لاتاری
+      </span>
     </template>
     <div class="flex flex-col gap-10">
       <div class="grid grid-cols-12 items-center">
@@ -33,7 +35,6 @@
       <Table
           :headers="dataTable.headers"
           :url="dataTable.url"
-          :parameters="dataTable.params"
           :key="dataTable.key"
           :itemKeyRequest="dataTable.itemKey"
       >
@@ -206,8 +207,8 @@ const dataTable = ref({
   headers:[
     { title: 'نام انگلیسی', key: 'first_name_english' },
     { title: 'نام خانوادگی انگلیسی', key: 'last_name_english' },
-    { title: 'نام فارسی', key: 'first_name_persian' },
-    { title: 'نام خانوادگی فارسی', key: 'last_name_persian' },
+    // { title: 'نام فارسی', key: 'first_name_persian' },
+    // { title: 'نام خانوادگی فارسی', key: 'last_name_persian' },
     // { title: 'نام', key: 'location_id' },
     // { title: 'نام', key: 'birth_country_id' },
     // { title: 'نام', key: 'birth_province_id' },
