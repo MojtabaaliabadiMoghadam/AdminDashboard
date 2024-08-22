@@ -10,16 +10,10 @@
         <div class="flex flex-col gap-2 w-full">
           <template v-for="(data, index) in data_up_sidebar" :key="index">
             <div @click="changePage(data.path)" :class="[!store.showSidebar?'!px-2':'',index === 4?'border-b pb-4':'']" class="px-5 cursor-pointer">
-              <div
-                  class="flex gap-3 justify-center items-center rounded-xl ease-in duration-200 h-[50px] hover:bg-[#4880FF] hover:text-white group "
-                  :class="{'!bg-[#4880FF]' : route.path == data.path}"
-              >
+              <div class="flex gap-3 justify-center items-center rounded-xl ease-in duration-200 h-[50px] hover:bg-[#4880FF] hover:text-white group " :class="{'!bg-[#4880FF]' : route.path == data.path}">
                 <span :class="[data.icon,route.path == data.path ? 'text-white':null]" class="text-[#202224] group-hover:text-white mdi mdi-24px"></span>
                 <transition>
-                <span v-if="store.showSidebar"
-                      class="font-medium text-[#202224] group-hover:text-white flex justify-start items-center text-[16px] w-[100px]"
-                      :class="{'!text-white' : route.path == data.path}"
-                >
+                <span v-if="store.showSidebar" class="font-medium text-[#202224] group-hover:text-white flex justify-start items-center text-[16px] w-[100px]" :class="{'!text-white' : route.path == data.path}">
                       {{ data.text }}
                 </span>
                 </transition>
@@ -43,7 +37,7 @@
 <!--          </template>-->
 <!--        </div>-->
       </div>
-      <div :class="{'!px-2': !store.showSidebar}" class="w-full px-5">
+      <div @click="logOut" :class="{'!px-2': !store.showSidebar}" class="w-full px-5 cursor-pointer">
         <div class="flex gap-3 justify-center items-center rounded-xl ease-in duration-200 h-[50px] hover:bg-[#4880FF] hover:text-white group">
           <span class="mdi text-[#202224] mdi-close mdi-24px group-hover:text-white"></span>
           <transition>
@@ -59,13 +53,15 @@
 <script setup lang="ts">
 import { useDataStore } from "@/stores/store.ts";
 import {useRoute, useRouter} from "vue-router";
+import {fetchData} from "@/Helpers/helper";
 const route = useRoute()
 const router = useRouter()
 const store = useDataStore();
 const data_up_sidebar = [
   { icon: 'mdi-view-dashboard-outline', text: 'داشبورد' ,path:'/admin/dashboard'},
   { icon: 'mdi-account-multiple-outline', text: 'لیست کاربران' ,path:'/admin/list-of-users'},
-  { icon: 'mdi-book-open-outline', text: 'لیست نقالات' ,path:'/admin/list-of-articles'},
+  { icon: 'mdi-book-open-outline', text: 'لیست مقالات' ,path:'/admin/list-of-articles'},
+  { icon: 'mdi-account-multiple', text: 'کاربران لاتاری' ,path:'/admin/list-of-lottery-users'},
 ];
 // const data_down_sidebar = [];
 
@@ -75,6 +71,17 @@ function ToggleSidebar() {
 function changePage(pathIn){
   router.push({path:pathIn})
 }
+
+async function logOut(){
+  let url_ = `/api/logout`
+  const { status, data, message } = await fetchData({
+    endpoint:url_,
+    authorization: true,
+  })
+  localStorage.removeItem('authorization')
+  // todo set query path login/otp
+}
+
 </script>
 
 <style scoped>

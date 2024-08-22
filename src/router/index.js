@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
 import ListOfUsers from "@/views/ListOfUsers.vue";
+import ListOfLotteryUsers from "@/views/ListOfLotteryUsers.vue";
 import ListOfArticle from "@/views/ListOfArticle.vue";
 import Login from "@/views/Login.vue";
 import OtpConfirm from "@/views/OtpConfirm.vue";
@@ -18,6 +19,12 @@ const router = createRouter({
       path: '/admin/list-of-users',
       name: 'list-of-users',
       component: ListOfUsers,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/admin/list-of-lottery-users',
+      name: 'list-of-lottery-users',
+      component: ListOfLotteryUsers,
       meta: { requiresAuth: true }
     },
     {
