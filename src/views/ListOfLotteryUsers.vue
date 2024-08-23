@@ -6,26 +6,28 @@
       </span>
     </template>
     <div class="flex flex-col gap-10">
-      <div class="grid grid-cols-12 items-center">
-        <div class="inline-flex col-span-3">
-          <base-input label="جستجو" v-model="searchInput" placeholder="جستجو کنید">
-            <template #icon>
-              <span class="mdi mdi-magnify" />
-            </template>
-          </base-input>
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <div class="inline-flex">
+            <base-input label="جستجو" v-model="searchInput" placeholder="جستجو کنید">
+              <template #icon>
+                <span class="mdi mdi-magnify" />
+              </template>
+            </base-input>
+          </div>
+          <div>
+            <BaseSelect
+                v-model="status"
+                :label="formItems.status.label"
+                :optionValue="formItems.status.optionValue"
+                :optionText="formItems.status.optionText"
+                :localOptions="formItems.status.localOptions"
+                :place_holder="formItems.status.place_holder"
+                :size="formItems.status.size"
+            />
+          </div>
         </div>
-        <div class="col-span-3">
-          <BaseSelect
-              v-model="status"
-              :label="formItems.status.label"
-              :optionValue="formItems.status.optionValue"
-              :optionText="formItems.status.optionText"
-              :localOptions="formItems.status.localOptions"
-              :place_holder="formItems.status.place_holder"
-              :size="formItems.status.size"
-          />
-        </div>
-        <div class="col-span-6 flex justify-end ">
+        <div class="flex justify-end ">
           <button @click="isModalCreate = true" type="button" class="text-blue-700 font-bold hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4
           focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-10 py-3 text-center me-2 mb-2">
             ایجاد کاربر
@@ -151,7 +153,7 @@
   </LayoutOfPages>
 </template>
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
+import {onMounted, ref, UnwrapRef, watch} from 'vue';
 import LayoutOfPages from '@/components/Elements/LayoutOfPages.vue';
 import Table from '@/components/Elements/Table.vue';
 import BaseInput from '@/components/UIKit/baseInput.vue';
@@ -264,7 +266,7 @@ async function getDataUser(id){
   idUserClicked.value = id
   loadingGetDataUser.value = true
   isModalOpen.value = true
-  let url_ = `/api/users/${idUserClicked.value}`
+  let url_ = `/api/lottery-users/${idUserClicked.value}`
    const { status, data, message } = await fetchData({
     endpoint:url_,
     authorization: true,
@@ -281,7 +283,7 @@ function openModalRemove(id){
   isModalRemoveOpen.value = true
 }
 async function addNewUser(){
-  let url_ = `/api/users`
+  let url_ = `/api/lottery-users`
   const {status, message } = await fetchData({
     endpoint:url_,
     authorization: true,
@@ -302,7 +304,7 @@ async function addNewUser(){
 }
 async function removeDataUser(){
   isModalRemoveOpen.value = true
-  let url_ = `/api/users/${idUserClicked.value}`
+  let url_ = `/api/lottery-users/${idUserClicked.value}`
   const { status, message } = await fetchData({
     endpoint:url_,
     method:'DELETE',
@@ -319,7 +321,7 @@ async function removeDataUser(){
 }
 async function updateUser(){
   loadingGetDataUser.value = true
-  let url_ = `/api/users/${idUserClicked.value}`
+  let url_ = `/api/lottery-users/${idUserClicked.value}`
   const { status , message } = await fetchData({
     endpoint:url_,
     method:'PUT',

@@ -11,5 +11,6 @@ textarea, input { outline: none; }
 
 body {
     font-family: 'vazir', sans-serif;
-    @apply bg-[#EDEEF3]
+    @apply bg-[#EDEEF3];
+    direction: rtl;
 }

@@ -53,9 +53,7 @@ function ChangeDropDown (){
   toggleDropDown.value = !toggleDropDown.value
 }
 const data_dropdown = [
-  {extra_class:'', color:'bg-[#4E96FF]', icon: 'mdi-account-edit', text: 'Manage Account'},
   {extra_class:'',color:'bg-[#F97FD9]', icon: 'mdi-key-variant', text: 'Change Password'},
-  {extra_class:'',color:'bg-[#9E8FFF]', icon: 'mdi-refresh', text: 'Activity Log'},
   {extra_class:'', color:'bg-[#FF8F8F]', icon: 'mdi-logout', text: 'Log Out'},
 ];
 function closeDropdown() {

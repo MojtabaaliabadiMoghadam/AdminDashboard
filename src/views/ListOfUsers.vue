@@ -4,28 +4,30 @@
       <span class="font-bold text-[24px]">لیست کاربران</span>
     </template>
     <div class="flex flex-col gap-10">
-      <div class="grid grid-cols-12 items-center">
-        <div class="inline-flex lg:col-span-3 md:col-span-4 sm:col-span-6">
-          <base-input label="جستجو" v-model="searchInput" placeholder="جستجو کنید">
-            <template #icon>
-              <span class="mdi mdi-magnify" />
-            </template>
-          </base-input>
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <div class="inline-flex">
+            <base-input label="جستجو" v-model="searchInput" placeholder="جستجو کنید">
+              <template #icon>
+                <span class="mdi mdi-magnify" />
+              </template>
+            </base-input>
+          </div>
+          <div class="">
+            <BaseSelect
+                v-model="status"
+                :label="formItems.status.label"
+                :optionValue="formItems.status.optionValue"
+                :optionText="formItems.status.optionText"
+                :localOptions="formItems.status.localOptions"
+                :place_holder="formItems.status.place_holder"
+                :size="formItems.status.size"
+            />
+          </div>
         </div>
-        <div class="lg:col-span-3 md:col-span-4 sm:col-span-6">
-          <BaseSelect
-              v-model="status"
-              :label="formItems.status.label"
-              :optionValue="formItems.status.optionValue"
-              :optionText="formItems.status.optionText"
-              :localOptions="formItems.status.localOptions"
-              :place_holder="formItems.status.place_holder"
-              :size="formItems.status.size"
-          />
-        </div>
-        <div class="md:col-span-6 sm:col-span-12 flex justify-end ">
-          <button @click="isModalCreate = true" type="button" class="text-blue-700 font-bold hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4
-          focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-10 py-3 text-center me-2 mb-2">
+        <div class="flex justify-end">
+          <button @click="isModalCreate = true" type="button" class="text-blue-700 flex items-center gap-3 font-bold hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4
+          focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-10 py-3 text-center mdi mdi-plus mdi-24px">
             ایجاد کاربر
           </button>
         </div>

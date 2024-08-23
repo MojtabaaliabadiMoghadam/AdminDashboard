@@ -61,7 +61,7 @@
           <td
               v-for="(header, headerIndex) in props.headers"
               :key="headerIndex"
-              class="px-6 py-3 text-center"
+              class="px-6 py-2 text-center"
               :class="[header.width ? `w-[${header.width}px]` : null]"
           >
             <slot :name="header.key" :item="item">
