@@ -38,9 +38,6 @@
           :key="dataTable.key"
           :itemKeyRequest="dataTable.itemKey"
       >
-        <template #created_at="{item}">
-            {{formatDate(item.created_at)}}
-        </template>
         <template #settings="{item}">
           <div class="flex gap-2 items-center justify-center">
             <span @click="getDataUser(item.id)" class="h-10 w-10  rounded-full p-2 hover:bg-blue-100 mdi mdi-cog mdi-24px text-blue-500 transition-all
@@ -226,7 +223,7 @@ const dataTable = ref({
   params:{status:status.value},
   url:'/api/lottery-users',
   key:0,
-  itemKey:'users'
+  itemKey:'lottery_users'
 })
 const formItems = ref({
   status:{
