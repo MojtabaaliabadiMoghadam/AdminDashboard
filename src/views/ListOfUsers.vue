@@ -87,13 +87,13 @@
         </div>
       </template>
       <template v-if="!loadingGetDataUser" #buttons>
-        <button @click="isModalCreate = false" type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300
-        font-medium rounded-lg text-sm px-10 py-3 me-2 mb-2 ">
-          لغو
-        </button>
         <button @click="addNewUser" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
          font-medium rounded-lg text-sm px-10 py-3 w-[170px] me-2 mb-2 focus:outline-none">
           ایجاد کاربر
+        </button>
+        <button @click="isModalCreate = false" type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300
+        font-medium rounded-lg text-sm px-10 py-3 me-2 mb-2 ">
+          لغو
         </button>
       </template>
     </base-modal>
