@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 textarea, input { outline: none; }
 
 @font-face {
@@ -13,4 +14,6 @@ body {
     font-family: 'vazir', sans-serif;
     @apply bg-[#EDEEF3];
     direction: rtl;
+    height: 100% !important;
+    overflow: hidden !important;
 }

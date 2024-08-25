@@ -1,5 +1,5 @@
 import './assets/main.css'
-
+import 'ckeditor5/ckeditor5.css';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import '@mdi/font/css/materialdesignicons.min.css'
@@ -10,9 +10,10 @@ import router from './router'
 import 'vue3-toastify/dist/index.css';
 import Select from 'primevue/select';
 const app = createApp(App)
-
+import { CkeditorPlugin } from '@ckeditor/ckeditor5-vue';
 app.use(createPinia())
 app.use(router)
+app.use(CkeditorPlugin )
 app.component('Select', Select);
 app.use(PrimeVue, {
     theme: {
