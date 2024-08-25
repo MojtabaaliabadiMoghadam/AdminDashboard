@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="flex justify-end">
-          <button @click="isModalCreate = true" type="button" class="text-blue-700 flex items-center gap-3 font-bold hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4
+          <button @click="router.push('/admin/create-blog')" type="button" class="text-blue-700 flex items-center gap-3 font-bold hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4
           focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-10 py-3 text-center mdi mdi-plus mdi-24px">
             ایجاد مقاله
           </button>
@@ -52,23 +52,6 @@
         </template>
       </Table>
     </div>
-    <base-modal @confirm="updateUser" v-model="isModalCreate" @update:isOpen="isModalCreate = $event" title="ایجاد کاربر">
-      <template #body>
-        <div class="w-[800px]">
-          <CkeditorBlog />
-        </div>
-      </template>
-      <template v-if="!loadingGetDataUser" #buttons>
-        <button @click="isModalCreate = false" type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300
-        font-medium rounded-lg text-sm px-10 py-3 me-2 mb-2 ">
-          لغو
-        </button>
-        <button @click="addNewUser" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
-         font-medium rounded-lg text-sm px-10 py-3 w-[170px] me-2 mb-2 focus:outline-none">
-          ایجاد کاربر
-        </button>
-      </template>
-    </base-modal>
     <base-modal @confirm="updateUser" v-model="isModalOpen" @update:isOpen="isModalOpen = $event" title="ویرایش کاربر">
       <template #body>
         <div class="min-w-[988px] flex">
@@ -135,7 +118,9 @@ import BaseSelect from '@/components/UIKit/baseSelect.vue';
 import {fetchData, formatDate, showErrorToast, showSuccessToast} from '@/Helpers/helper.ts';
 import BaseModal from "@/components/UIKit/baseModal.vue";
 import CkeditorBlog from "@/components/Articles/CkeditorBlog.vue";
+import {useRouter} from "vue-router";
 //variables
+const router = useRouter()
 const status = ref<number>(1)
 const dataUser = ref({})
 const loadingGetDataUser = ref<boolean>(false)

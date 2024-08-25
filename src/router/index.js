@@ -2,9 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home.vue'
 import ListOfUsers from "@/views/ListOfUsers.vue";
 import ListOfLotteryUsers from "@/views/ListOfLotteryUsers.vue";
-import ListOfArticle from "@/views/ListOfArticle.vue";
+import ListOfArticle from "@/views/Blogs/ListOfArticle.vue";
 import Login from "@/views/Login.vue";
 import OtpConfirm from "@/views/OtpConfirm.vue";
+import CreateBlog from '@/views/Blogs/CreateBlog.vue'
 // ایجاد router
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,12 @@ const router = createRouter({
       path: '/admin/list-of-articles',
       name: 'list-of-articles',
       component: ListOfArticle,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/admin/create-blog',
+      name: 'create-blog',
+      component: CreateBlog,
       meta: { requiresAuth: true }
     },
     {
