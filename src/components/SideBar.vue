@@ -37,7 +37,7 @@
 <!--          </template>-->
 <!--        </div>-->
       </div>
-      <div @click="logOut" :class="{'!px-2': !store.showSidebar}" class="w-full px-5 cursor-pointer">
+      <div @click="isModalLogout = true" :class="{'!px-2': !store.showSidebar}" class="w-full px-5 cursor-pointer">
         <div class="flex gap-3 justify-center items-center rounded-xl ease-in duration-200 h-[50px] hover:bg-[#4880FF] hover:text-white group">
           <span class="mdi text-[#202224] mdi-close mdi-24px group-hover:text-white"></span>
           <transition>
@@ -48,12 +48,34 @@
         </div>
       </div>
     </div>
+    <base-modal @confirm="logOut" v-model="isModalLogout" @update:isOpen="isModalLogout = $event" title="خروج">
+      <template #body>
+        <div class="min-w-[400px] flex">
+          <span class="text-[18px] font-medium flex w-full justify-start">
+            آیا میخواهید خارج شوید؟
+          </span>
+        </div>
+      </template>
+      <template #buttons>
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
+         font-medium rounded-lg text-sm px-10 py-3 w-[170px] me-2 mb-2 focus:outline-none">
+          خروج
+        </button>
+        <button @click="isModalLogout = false" type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:ring-red-300
+        font-medium rounded-lg text-sm px-10 py-3 me-2 mb-2 ">
+          لغو
+        </button>
+      </template>
+    </base-modal>
   </div>
 </template>
 <script setup lang="ts">
 import { useDataStore } from "@/stores/store.ts";
 import {useRoute, useRouter} from "vue-router";
-import {fetchData} from "@/Helpers/helper";
+import {fetchData, showErrorToast} from "@/Helpers/helper";
+import BaseModal from "@/components/UIKit/baseModal.vue";
+import {ref} from "vue";
+//imports
 const route = useRoute()
 const router = useRouter()
 const store = useDataStore();
@@ -63,8 +85,8 @@ const data_up_sidebar = [
   { icon: 'mdi-book-open-outline', text: 'لیست مقالات' ,path:'/admin/list-of-articles'},
   { icon: 'mdi-account-multiple', text: 'کاربران لاتاری' ,path:'/admin/list-of-lottery-users'},
 ];
-// const data_down_sidebar = [];
-
+const isModalLogout = ref<boolean>(false)
+//variables
 function ToggleSidebar() {
   store.showSidebar = !store.showSidebar;
 }
@@ -74,12 +96,18 @@ function changePage(pathIn){
 
 async function logOut(){
   let url_ = `/api/logout`
-  const { status, data, message } = await fetchData({
+  const { status, message } = await fetchData({
     endpoint:url_,
     authorization: true,
+    method:'POST'
   })
-  localStorage.removeItem('authorization')
-  // todo set query path login/otp
+  if (status == 200){
+    store.clearToken();
+    isModalLogout.value = false;
+    await router.push('/login');
+  }else{
+    showErrorToast(message)
+  }
 }
 
 </script>

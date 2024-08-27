@@ -5,7 +5,7 @@
         <SearchBoxHeader />
       </div>
       <div class="flex gap-24  justify-between items-center">
-        <NotificationDropDown class="pt-2" />
+<!--        <NotificationDropDown class="pt-2" />-->
         <DropDown />
       </div>
     </div>

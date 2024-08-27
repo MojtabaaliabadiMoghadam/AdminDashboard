@@ -129,7 +129,6 @@ const isModalCreate = ref<boolean>(false)
 const isModalRemoveOpen = ref<boolean>(false)
 const isModalOpen = ref<boolean>(false)
 const idUserClicked = ref()
-
 interface IFormDataCreate {
   first_name: string,
   last_name: string,
@@ -175,8 +174,8 @@ const dataTable = ref({
   ],
   data:[],
   loading:false,
-  params:{status:status.value},
-  url:'/api/users',
+  params:{},
+  url:'/api/blog',
   key:0,
   itemKey:'users'
 })

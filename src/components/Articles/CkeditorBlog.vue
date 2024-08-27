@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="">
     <ckeditor
-        v-model="editorData"
+        v-model="modal"
         :editor="editor"
         :config="editorConfig"
     />
@@ -138,5 +138,11 @@ const editorConfig = ref({
   licenseKey: '<YOUR_LICENSE_KEY>',
 });
 const editor = ClassicEditor
-const editorData = ref('')
+const modal = defineModel()
 </script>
+<style>
+.ck-editor__editable_inline {
+  min-height: 500px !important;
+  overflow-y: auto !important;
+}
+</style>
