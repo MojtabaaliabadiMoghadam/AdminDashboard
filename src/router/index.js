@@ -5,7 +5,7 @@ import ListOfLotteryUsers from "@/views/ListOfLotteryUsers.vue";
 import ListOfArticle from "@/views/Blogs/ListOfArticle.vue";
 import Login from "@/views/Login.vue";
 import OtpConfirm from "@/views/OtpConfirm.vue";
-import CreateBlog from '@/views/Blogs/CreateBlog.vue'
+import CreateBlog from '@/views/Blogs/CreateEditBlog.vue'
 // ایجاد router
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

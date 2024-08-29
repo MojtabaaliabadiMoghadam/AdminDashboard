@@ -21,12 +21,21 @@
 <script setup>
 import LayoutOfPages from "@/components/Elements/LayoutOfPages.vue";
 import CkeditorBlog from "@/components/Articles/CkeditorBlog.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import {useBlogStore} from "@/stores/blogStore.js";
+const blogStore = useBlogStore()
+
 //import files
 const blog = ref()
 //variables
 async function submitBlog(){
 
 }
+// function checkEditOrCrate(){
+//   if ()
+// }
 //functions
+onMounted(()=>{
+
+})
 </script>

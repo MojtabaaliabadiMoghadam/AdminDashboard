@@ -52,6 +52,13 @@
           </td>
         </tr>
         <!-- Table rows -->
+        <tr v-else-if="notFoundData">
+          <td :colspan="props.headers.length" class="text-center py-10">
+            <div role="status" class="flex justify-center items-center">
+              <img src="@/assets/images/no-data-found.jpg">
+            </div>
+          </td>
+        </tr>
         <tr
             v-else
             v-for="(item, dataIndex) in finalData"
@@ -115,10 +122,11 @@ const loadingTable = ref<boolean>(false);
 const per_page = ref<number>(10);  // Default value is set to 10
 const DataFromBackend = ref();
 const pagination = ref<IPagination>();
-
+const notFoundData = ref<boolean>(false)
 // Fetch data
 async function getDataWithUrl() {
   loadingTable.value = true;
+  notFoundData.value = false
   try {
     const { status, data, message } = await fetchData({
       endpoint: props.url,
@@ -132,9 +140,11 @@ async function getDataWithUrl() {
     });
 
     if (status == 200) {
+      notFoundData.value = false
       DataFromBackend.value = data[props.itemKeyRequest];
       pagination.value = data.pagination;
     } else {
+      notFoundData.value = true
       showErrorToast(message);
     }
   } catch (error) {

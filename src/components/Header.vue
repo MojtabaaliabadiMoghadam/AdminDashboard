@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-[70px] shadow-md flex items-center justify-between bg-white sticky top-0 p-2">
+    <div class="w-full h-[72px] shadow-md flex items-center justify-between bg-white sticky top-0 p-2 border-b-2 border-blue-500 ">
       <div class="ps-5 flex gap-8">
         <span v-if="store.showSidebar" @click="ToggleMenu" class="mdi mdi-menu mdi-24px cursor-pointer"></span>
         <SearchBoxHeader />
