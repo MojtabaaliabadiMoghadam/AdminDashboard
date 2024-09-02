@@ -83,7 +83,7 @@ import {fetchData, formatDate, showErrorToast, showSuccessToast} from '@/Helpers
 import BaseModal from "@/components/UIKit/baseModal.vue";
 import CkeditorBlog from "@/components/Articles/CkeditorBlog.vue";
 import {useRouter} from "vue-router";
-import {useBlogStore} from "@/stores/blogStore";
+import {useBlogStore} from "@/stores/blogStore.ts";
 const blogStore = useBlogStore()
 //variables
 const router = useRouter()
