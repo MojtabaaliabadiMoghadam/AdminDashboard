@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { toast } from 'vue3-toastify'
-const API_BASE_URL = 'http://185.147.160.121'
+// const API_BASE_URL = 'http://185.147.160.121'
+const API_BASE_URL = 'http://ayandesabz.ir'
 // const API_BASE_URL = 'http://localhost:8000'
 import { toJalaali } from 'jalaali-js'
 // Function to create an Axios instance with initial settings
