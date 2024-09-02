@@ -12,7 +12,6 @@
       <router-view></router-view>
     </div>
   </template>
-
   <script setup>
   import {RouterView, useRoute, useRouter} from 'vue-router';
   import Header from "@/components/Header.vue";
@@ -34,3 +33,5 @@
     checkIsLoggIn()
   })
   </script>
+  <style>
+  </style>

@@ -22,7 +22,7 @@
 import LayoutOfPages from "@/components/Elements/LayoutOfPages.vue";
 import CkeditorBlog from "@/components/Articles/CkeditorBlog.vue";
 import {onMounted, ref} from "vue";
-import {useBlogStore} from "@/stores/blogStore.js";
+import {useBlogStore} from "@/stores/blogStore";
 const blogStore = useBlogStore()
 
 //import files
