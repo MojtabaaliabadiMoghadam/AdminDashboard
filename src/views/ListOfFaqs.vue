@@ -75,7 +75,7 @@ const dataTable = ref({
   data: [],
   loading: false,
   params: {},
-  url: '/api/faqs',
+  url: 'faqs',
   key: 0,
   itemKey: 'faqs'
 });
