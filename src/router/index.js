@@ -6,28 +6,62 @@ import ListOfArticle from "@/views/Blogs/ListOfArticle.vue";
 import Login from "@/views/Login.vue";
 import OtpConfirm from "@/views/OtpConfirm.vue";
 import CreateBlog from '@/views/Blogs/CreateEditBlog.vue'
+import ListOfFaqs from "@/views/ListOfFaqs.vue";
+
 // ایجاد router
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL), routes: [{
-        path: '/api/admin/dashboard', name: 'dashboard', component: Home, meta: {requiresAuth: true}
-    }, {
-        path: '/api/admin/list-of-users', name: 'list-of-users', component: ListOfUsers, meta: {requiresAuth: true}
-    }, {
-        path: '/api/admin/list-of-lottery-users',
-        name: 'list-of-lottery-users',
-        component: ListOfLotteryUsers,
-        meta: {requiresAuth: true}
-    }, {
-        path: '/api/admin/list-of-articles', name: 'list-of-articles', component: ListOfArticle, meta: {requiresAuth: true}
-    }, {
-        path: '/api/admin/create-blog', name: 'create-blog', component: CreateBlog, meta: {requiresAuth: true}
-    }, {
-        path: '/login/otp', name: 'login', component: Login
-    }, {
-        path: '/login/otp-confirm', name: 'otp', component: OtpConfirm
-    }, {
-        path: '/:pathMatch(.*)*', redirect: '/admin/dashboard'
-    }]
+    history: createWebHistory(import.meta.env.BASE_URL), routes: [
+        {
+            path: '/api/admin/dashboard',
+            name: 'dashboard',
+            component: Home,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/api/admin/list-of-users',
+            name: 'list-of-users',
+            component: ListOfUsers,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/api/admin/list-of-lottery-users',
+            name: 'list-of-lottery-users',
+            component: ListOfLotteryUsers,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/api/admin/list-of-faqs',
+            name: 'list-of-lottery-faqs',
+            component: ListOfFaqs,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/api/admin/list-of-articles',
+            name: 'list-of-articles',
+            component: ListOfArticle,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/api/admin/create-blog',
+            name: 'create-blog',
+            component: CreateBlog,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/login/otp',
+            name: 'login',
+            component: Login
+        },
+        {
+            path: '/login/otp-confirm',
+            name: 'otp',
+            component: OtpConfirm
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            redirect: '/admin/dashboard'
+        }
+    ]
 });
 
 // middleware برای چک کردن ورود

@@ -89,10 +89,10 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import Pagination from '@/components/UIKit/pagination.vue';
-import { fetchData, showErrorToast } from '@/Helpers/helper';
+<script setup lang="ts" >
+import { ref, computed, onMounted } from 'vue'
+import Pagination from '@/components/UIKit/pagination.vue'
+import { fetchData, showErrorToast } from '@/Helpers/helper'
 
 interface IHeaders {
   title?: string;
@@ -117,11 +117,11 @@ interface IPropsData {
   pagination?: IPagination;
 }
 
-const props = defineProps<IPropsData>();
-const loadingTable = ref<boolean>(false);
-const per_page = ref<number>(10);  // Default value is set to 10
-const DataFromBackend = ref();
-const pagination = ref<IPagination>();
+const props = defineProps<IPropsData>()
+const loadingTable = ref<boolean>(false)
+const per_page = ref<number>(10)
+const DataFromBackend = ref()
+const pagination = ref<IPagination>()
 const notFoundData = ref<boolean>(false)
 // Fetch data
 async function getDataWithUrl() {
@@ -137,39 +137,40 @@ async function getDataWithUrl() {
         per_page: per_page.value,
       },
       authorization: true,
-    });
+    })
 
     if (status == 200) {
       notFoundData.value = false
-      DataFromBackend.value = data[props.itemKeyRequest];
-      pagination.value = data.pagination;
+      DataFromBackend.value = data[props.itemKeyRequest]
+      pagination.value = data.pagination
     } else {
       notFoundData.value = true
-      showErrorToast(message);
+      showErrorToast(message)
     }
   } catch (error) {
-    console.error('Failed to fetch data:', error);
+    console.error('Failed to fetch data:', error)
   } finally {
-    loadingTable.value = false;
+    loadingTable.value = false
   }
 }
 
-const finalData = computed(() => (props.url ? DataFromBackend.value : props.data));
-const finalLoading = computed(() => (props.url ? loadingTable.value : props.loading));
+const finalData = computed(() => (props.url ? DataFromBackend.value : props.data))
+const finalLoading = computed(() => (props.url ? loadingTable.value : props.loading))
 
 onMounted(async () => {
-  await getDataWithUrl();
-});
+  await getDataWithUrl()
+})
 
 async function setCurrentPage(event) {
-  pagination.value.current_page = event;
+  pagination.value.current_page = event
   console.log(pagination.value.current_page)
-  await getDataWithUrl();
+  await getDataWithUrl()
 }
 
 async function setPerPage(event: Event) {
-  const target = event.target as HTMLSelectElement;
-  per_page.value = parseInt(target.value);
-  await getDataWithUrl();
+  const target = event.target as HTMLSelectElement
+  per_page.value = parseInt(target.value)
+  await getDataWithUrl()
 }
+
 </script>
