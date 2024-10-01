@@ -23,15 +23,15 @@
           :itemKeyRequest="dataTable.itemKey"
       >
         <template #answer="{item}" >
-          {{ item.answer }}
+          {{ truncateText(item?.answer ||'',100) }}
         </template>
         <template #question="{item}" >
-          {{ item.question }}
+          {{ truncateText(item?.question ||'',0) }}
         </template>
         <template #settings="{item}" >
-          <!--          <div class="flex gap-2 items-center justify-center">-->
-          <!--            <span @click="openModalRemove(item.id)" class="h-10 w-10  rounded-full p-2 hover:bg-red-100 mdi mdi-delete-outline mdi-24px text-red-500 transition-all delay-75 cursor-pointer"/>-->
-          <!--          </div>-->
+            <div class="flex gap-2 items-center justify-center" >
+              <span @click="moreInformation(item)" class="h-10 w-10 rounded-full p-2 hover:bg-red-100 mdi mdi-information mdi-24px text-blue-500 transition-all delay-75 cursor-pointer" />
+            </div>
         </template>
       </Table>
     </div>
@@ -43,6 +43,23 @@ import LayoutOfPages from '@/components/Elements/LayoutOfPages.vue'
 import Table from '@/components/Elements/Table.vue'
 import BaseInput from '@/components/UIKit/baseInput.vue'
 import {fetchData, showErrorToast, showSuccessToast} from '@/Helpers/helper.ts'
+
+/* --------------------------------------------------------------------------- */
+
+function moreInformation(item){
+
+}
+
+function truncateText(text:string='', length:number=100) {
+  if(length ===0){
+    return text;
+  }
+
+  if (text.length > length) {
+    return text.slice(0, length) + '...'; // اگر متن بلندتر از 100 کاراکتر بود، "..." اضافه می‌کنیم
+  }
+  return text; // در غیر اینصورت، خود متن نمایش داده می‌شود
+}
 
 interface FaqInterface {
   id: number;                // Unique identifier
