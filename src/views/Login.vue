@@ -10,7 +10,8 @@
         </div>
         <button class="flex px-24 py-2 bg-[#4880FF] text-white rounded justify-center items-center hover:bg-blue-600 active:bg-blue-700
         transition-all delay-75 ease-out">
-          ورود
+          <span v-if="!loader" >ورود</span>
+          <span v-if="loader" >لطفا چند لحظه صبر کنید</span>
         </button>
       </form>
     </div>
@@ -25,7 +26,10 @@ import {useDataStore} from "@/stores/store";
 const store = useDataStore()
 const router = useRouter()
 const mobileLogin = ref<number>()
+const loader = ref<boolean>(false);
+
 async function sendData() {
+  loader.value = true;
   const { status, message } = await fetchData({
     endpoint: '/api/otp',
     method: 'POST',
@@ -34,6 +38,7 @@ async function sendData() {
     },
     authorization: true
   });
+  loader.value = false;
   if (status == 200){
     store.mobile = mobileLogin.value
     showSuccessToast(message)
@@ -43,5 +48,6 @@ async function sendData() {
   }else{
     showErrorToast(message)
   }
+
 }
 </script>

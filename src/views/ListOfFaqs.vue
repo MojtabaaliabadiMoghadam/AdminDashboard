@@ -22,13 +22,13 @@
           :key="dataTable.key"
           :itemKeyRequest="dataTable.itemKey"
       >
-        <template #answer="{faq}">
-          {{ faq.answer }}
+        <template #answer="{item}" >
+          {{ item.answer }}
         </template>
-        <template #question="{faq}">
-          {{ faq.question }}
+        <template #question="{item}" >
+          {{ item.question }}
         </template>
-        <template #settings="{item}">
+        <template #settings="{item}" >
           <!--          <div class="flex gap-2 items-center justify-center">-->
           <!--            <span @click="openModalRemove(item.id)" class="h-10 w-10  rounded-full p-2 hover:bg-red-100 mdi mdi-delete-outline mdi-24px text-red-500 transition-all delay-75 cursor-pointer"/>-->
           <!--          </div>-->
@@ -75,7 +75,7 @@ const dataTable = ref({
   data: [],
   loading: false,
   params: {},
-  url: 'faqs',
+  url: 'api/faqs',
   key: 0,
   itemKey: 'faqs'
 });

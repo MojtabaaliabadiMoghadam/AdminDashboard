@@ -31,7 +31,7 @@ const router = createRouter({
         },
         {
             path: '/api/admin/list-of-faqs',
-            name: 'list-of-lottery-faqs',
+            name: 'list-of-faqs',
             component: ListOfFaqs,
             meta: {requiresAuth: true}
         },

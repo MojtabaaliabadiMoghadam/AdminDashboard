@@ -101,3 +101,6 @@ export function formatDateToJalali(isoString:any) {
 
     return `${jalaliYear}/${jalaliMonth.toString().padStart(2, '0')}/${jalaliDay.toString().padStart(2, '0')}`;
 }
+
+export function isFilled(value: any): boolean {    return value !== undefined && value !== null && value !== '';
+}
