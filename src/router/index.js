@@ -1,12 +1,14 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Home from '@/views/Home.vue'
-import ListOfUsers from "@/views/ListOfUsers.vue";
-import ListOfLotteryUsers from "@/views/ListOfLotteryUsers.vue";
-import ListOfArticle from "@/views/Blogs/ListOfArticle.vue";
-import Login from "@/views/Login.vue";
-import OtpConfirm from "@/views/OtpConfirm.vue";
+import ListOfUsers from "@/views/ListOfUsers.vue"
+import ListOfLotteryUsers from "@/views/ListOfLotteryUsers.vue"
+import ListOfArticle from "@/views/Blogs/ListOfArticle.vue"
+import Login from "@/views/Login.vue"
+import OtpConfirm from "@/views/OtpConfirm.vue"
 import CreateBlog from '@/views/Blogs/CreateEditBlog.vue'
-import ListOfFaqs from "@/views/ListOfFaqs.vue";
+import ListOfFaqs from "@/views/ListOfFaqs.vue"
+import ListOfPayments from "@/views/ListOfPayments.vue"
+import ListOfFactors from "@/views/ListOfFactors.vue"
 
 // ایجاد router
 const router = createRouter({
@@ -33,6 +35,18 @@ const router = createRouter({
             path: '/api/admin/list-of-faqs',
             name: 'list-of-faqs',
             component: ListOfFaqs,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/api/admin/list-of-factors',
+            name: 'list-of-factors',
+            component: ListOfFactors,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/api/admin/list-of-payments',
+            name: 'list-of-payments',
+            component: ListOfPayments,
             meta: {requiresAuth: true}
         },
         {

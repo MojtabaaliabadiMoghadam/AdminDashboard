@@ -85,6 +85,8 @@ const data_up_sidebar = [
   { icon: 'mdi-book-open-outline', text: 'لیست مقالات' ,path:'/admin/list-of-articles'},
   { icon: 'mdi-account-multiple', text: 'کاربران لاتاری' ,path:'/admin/list-of-lottery-users'},
   { icon: 'mdi-account-multiple', text: 'سوالات متداول' ,path:'api/admin/list-of-faqs',name:'list-of-faqs'},
+  { icon: 'mdi-account-multiple', text: 'لیست پرداخت' ,path:'api/admin/list-of-payments',name:'list-of-payments'},
+  { icon: 'mdi-account-multiple', text: 'لیست فاکتور' ,path:'api/admin/list-of-factors',name:'list-of-factors'},
 ];
 const isModalLogout = ref<boolean>(false)
 //variables
