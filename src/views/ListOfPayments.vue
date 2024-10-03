@@ -22,31 +22,33 @@
           :key="dataTable.key"
           :itemKeyRequest="dataTable.itemKey"
       >
-        <template #resnumber="{item}" >
+        <template #resnumber="{item}">
           {{ item?.resnumber || 'نامشخص' }}
         </template>
-        <template #amount="{item}" >
+        <template #amount="{item}">
           {{ formatAmount(item?.amount) }}
         </template>
-        <template #status="{item}" >
+        <template #status="{item}">
           {{ getStatusLabel(item?.status) }}
         </template>
-        <template #settings="{item}" >
-          <div class="flex gap-2 items-center justify-center" >
-            <span @click="moreInformation(item)" class="h-10 w-10 rounded-full p-2 hover:bg-red-100 mdi mdi-information mdi-24px text-blue-500 transition-all delay-75 cursor-pointer" />
+        <template #settings="{item}">
+          <div class="flex gap-2 items-center justify-center">
+            <span
+                @click="moreInformation(item)"
+                  class="h-10 w-10 rounded-full p-2 hover:bg-red-100 mdi mdi-information mdi-24px text-blue-500 transition-all delay-75 cursor-pointer"
+            />
           </div>
         </template>
       </Table>
     </div>
   </LayoutOfPages>
 </template>
-
 <script setup lang='ts'>
-import { ref, onMounted } from 'vue'
+import {ref, onMounted} from 'vue'
 import LayoutOfPages from '@/components/Elements/LayoutOfPages.vue'
 import Table from '@/components/Elements/Table.vue'
 import BaseInput from '@/components/UIKit/baseInput.vue'
-import { fetchData, showErrorToast } from '@/Helpers/helper.ts'
+import {fetchData, showErrorToast} from '@/Helpers/helper.ts'
 
 /* --------------------------------------------------------------------------- */
 
@@ -55,7 +57,7 @@ function moreInformation(item) {
 }
 
 function formatAmount(amount: number): string {
-  return amount ? amount.toFixed(2) : '0.00'; // Format amount to 2 decimal places
+  return amount ? amount.toFixed(2) : '0.00'
 }
 
 function getStatusLabel(status: number): string {
@@ -63,29 +65,29 @@ function getStatusLabel(status: number): string {
     0: 'در انتظار',
     1: 'موفق',
     2: 'ناموفق',
-  };
-  return STATUS[status] || 'نامشخص'; // Return a label for the payment status
+  }
+  return STATUS[status] || 'نامشخص'
 }
 
 interface PaymentInterface {
-  id: number;
-  resnumber: string;
-  amount: number;
-  status: number;
-  factor_id: number;
-  user_id: number;
-  user_creator: number | null;
-  user_editor: number | null;
+  id: number
+  resnumber: string
+  amount: number
+  status: number
+  factor_id: number
+  user_id: number
+  user_creator: number | null
+  user_editor: number | null
 }
 
-const searchInput = ref<string | null>(null);
+const searchInput = ref<string | null>(null)
 
 const dataTable = ref({
   headers: [
-    { title: 'شماره رزرو', key: 'resnumber' },
-    { title: 'مبلغ', key: 'amount' },
-    { title: 'وضعیت', key: 'status' },
-    { title: 'تنظیمات', key: 'settings', width: 100 },
+    {title: 'شماره رزرو', key: 'resnumber'},
+    {title: 'مبلغ', key: 'amount'},
+    {title: 'وضعیت', key: 'status'},
+    {title: 'تنظیمات', key: 'settings', width: 100},
   ],
   data: [],
   loading: false,
@@ -93,28 +95,27 @@ const dataTable = ref({
   url: 'api/payments', // Your API endpoint for fetching payments
   key: 0,
   itemKey: 'payments'
-});
+})
 
 async function fetchPayments() {
   dataTable.value.loading = true;
-  const { status, data, message } = await fetchData({
+  const {status, data, message} = await fetchData({
     endpoint: dataTable.value.url,
     authorization: true,
-  });
+  })
 
   if (status === 200) {
-    dataTable.value.data = data;
+    dataTable.value.data = data
   } else {
-    showErrorToast(message);
+    showErrorToast(message)
   }
 }
 
+
 onMounted(async () => {
-  // Fetch payments when the component is mounted
-  await fetchPayments();
+  await fetchPayments()
 })
 
 </script>
-
 <style scoped>
 </style>
