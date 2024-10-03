@@ -1,7 +1,7 @@
 <template>
   <LayoutOfPages>
     <template #header>
-      <span class="font-bold text-[24px]">لیست سوالات متداول</span>
+      <span class="font-bold text-[24px]">لیست پرداخت‌ها</span>
     </template>
     <div class="flex flex-col gap-10">
       <div class="flex justify-between items-center">
@@ -22,84 +22,82 @@
           :key="dataTable.key"
           :itemKeyRequest="dataTable.itemKey"
       >
-        <template #answer="{item}" >
-          {{ truncateText(item?.answer ||'',100) }}
+        <template #resnumber="{item}" >
+          {{ item?.resnumber || 'نامشخص' }}
         </template>
-        <template #question="{item}" >
-          {{ truncateText(item?.question ||'',0) }}
+        <template #amount="{item}" >
+          {{ formatAmount(item?.amount) }}
+        </template>
+        <template #status="{item}" >
+          {{ getStatusLabel(item?.status) }}
         </template>
         <template #settings="{item}" >
-            <div class="flex gap-2 items-center justify-center" >
-              <span @click="moreInformation(item)" class="h-10 w-10 rounded-full p-2 hover:bg-red-100 mdi mdi-information mdi-24px text-blue-500 transition-all delay-75 cursor-pointer" />
-            </div>
+          <div class="flex gap-2 items-center justify-center" >
+            <span @click="moreInformation(item)" class="h-10 w-10 rounded-full p-2 hover:bg-red-100 mdi mdi-information mdi-24px text-blue-500 transition-all delay-75 cursor-pointer" />
+          </div>
         </template>
       </Table>
     </div>
   </LayoutOfPages>
 </template>
+
 <script setup lang='ts'>
-import {onMounted, ref, watch} from 'vue'
+import { ref, onMounted } from 'vue'
 import LayoutOfPages from '@/components/Elements/LayoutOfPages.vue'
 import Table from '@/components/Elements/Table.vue'
 import BaseInput from '@/components/UIKit/baseInput.vue'
-import {fetchData, showErrorToast, showSuccessToast} from '@/Helpers/helper.ts'
+import { fetchData, showErrorToast } from '@/Helpers/helper.ts'
 
 /* --------------------------------------------------------------------------- */
 
-function moreInformation(item){
-
+function moreInformation(item) {
+  // Implement more info logic here
 }
 
-function truncateText(text:string='', length:number=100) {
-  if(length ===0){
-    return text;
-  }
-
-  if (text.length > length) {
-    return text.slice(0, length) + '...'; // اگر متن بلندتر از 100 کاراکتر بود، "..." اضافه می‌کنیم
-  }
-  return text; // در غیر اینصورت، خود متن نمایش داده می‌شود
+function formatAmount(amount: number): string {
+  return amount ? amount.toFixed(2) : '0.00'; // Format amount to 2 decimal places
 }
 
-interface FaqInterface {
-  id: number;                // Unique identifier
-  question: string;         // The question text
-  answer: string;           // The answer text
-  category: string;         // Category of the FAQ
-  status: number;           // Status of the FAQ (use integer for consistency)
-  order: number;            // Order of the FAQ in the list
-  user_creator: number | null; // ID of the user who created the FAQ
-  user_editor: number | null;  // ID of the user who last edited the FAQ
+function getStatusLabel(status: number): string {
+  const STATUS = {
+    0: 'در انتظار',
+    1: 'موفق',
+    2: 'ناموفق',
+  };
+  return STATUS[status] || 'نامشخص'; // Return a label for the payment status
 }
 
-// Optional: you can also define the status constants as a separate type if needed
-const STATUS = {
-  UNKNOWN: 0,
-  DISABLE: 1,
-  ENABLE: 2,
-} as const;
-
-type StatusType = typeof STATUS[keyof typeof STATUS];
+interface PaymentInterface {
+  id: number;
+  resnumber: string;
+  amount: number;
+  status: number;
+  factor_id: number;
+  user_id: number;
+  user_creator: number | null;
+  user_editor: number | null;
+}
 
 const searchInput = ref<string | null>(null);
 
 const dataTable = ref({
   headers: [
-    {title: 'سوال', key: 'question'},
-    {title: 'پاسخ', key: 'answer'},
-    {title: 'تنظیمات', key: 'settings', width: 100},
+    { title: 'شماره رزرو', key: 'resnumber' },
+    { title: 'مبلغ', key: 'amount' },
+    { title: 'وضعیت', key: 'status' },
+    { title: 'تنظیمات', key: 'settings', width: 100 },
   ],
   data: [],
   loading: false,
   params: {},
-  url: 'api/faqs',
+  url: 'api/payments', // Your API endpoint for fetching payments
   key: 0,
-  itemKey: 'faqs'
+  itemKey: 'payments'
 });
 
-async function fetchFaqs() {
+async function fetchPayments() {
   dataTable.value.loading = true;
-  const {status, data, message} = await fetchData({
+  const { status, data, message } = await fetchData({
     endpoint: dataTable.value.url,
     authorization: true,
   });
@@ -112,9 +110,11 @@ async function fetchFaqs() {
 }
 
 onMounted(async () => {
-  // await fetchFaqs();
+  // Fetch payments when the component is mounted
+  await fetchPayments();
 })
 
 </script>
+
 <style scoped>
 </style>
